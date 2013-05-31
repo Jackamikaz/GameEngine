@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
@@ -127,5 +128,17 @@ public class ResourceManager {
 			return true;
 		}
 		return false;
+	}
+	
+	public String FindNameFromResource(Object res) {
+		if (res == null)
+			return "";
+		
+		for(Entry<String, Resource> entry : map.entrySet()) {
+			if (entry.getValue().GetResObject() == res)
+				return entry.getKey();
+		}
+		
+		return "";
 	}
 }

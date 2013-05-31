@@ -31,4 +31,8 @@ public abstract class Resource {
 	}
 	
 	public abstract String GetResName();
+	
+	public Object GetResObject() {
+		return resObj;
+	}
 }
