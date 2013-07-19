@@ -31,6 +31,13 @@ public class SaverTxt implements SaverLoader {
 	}
 	
 	@Override
+	public boolean processBoolean(boolean b) throws IOException {
+		somethingWritten = true;
+		fw.write(b + " ");
+		return b;
+	}
+	
+	@Override
 	public int processInt(int i) throws IOException {
 		somethingWritten = true;
 		fw.write(i + " ");
@@ -72,6 +79,7 @@ public class SaverTxt implements SaverLoader {
 
 	@Override
 	public void processArray(String name, int size, SaverLoaderObject obj) throws IOException {
+		newLine();
 		somethingWritten = true;
 		fw.write(name + " " + size);
 		newLine();

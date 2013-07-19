@@ -45,14 +45,15 @@ import com.jackamikaz.gameengine.DisplayMaster;
 import com.jackamikaz.gameengine.DisplayedEntity;
 import com.jackamikaz.gameengine.Engine;
 import com.jackamikaz.gameengine.InputEntity;
+import com.jackamikaz.gameengine.entities.ActionOnCondition;
+import com.jackamikaz.gameengine.entities.ButtonWatcher;
+import com.jackamikaz.gameengine.entities.InputWatcher;
+import com.jackamikaz.gameengine.entities.KeyWatcher;
 import com.jackamikaz.gameengine.resources.ResTexture;
 import com.jackamikaz.gameengine.utils.Action;
-import com.jackamikaz.gameengine.utils.ActionOnCondition;
-import com.jackamikaz.gameengine.utils.ButtonWatcher;
 import com.jackamikaz.gameengine.utils.InputCondition;
-import com.jackamikaz.gameengine.utils.InputWatcher;
-import com.jackamikaz.gameengine.utils.KeyWatcher;
 import com.jackamikaz.gameengine.utils.NumericTextField;
+import com.jackamikaz.gameengine.utils.Tmp;
 
 public class SpriteLayoutEditor implements DisplayedEntity, InputEntity, Action {
 
@@ -502,28 +503,24 @@ public class SpriteLayoutEditor implements DisplayedEntity, InputEntity, Action 
 	}
 
 	@Override
-	public void Display(float lerp) {
+	public void Display(float gdt, float glerp) {
 		Gdx.gl.glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
-		DisplayMaster dm = Engine.DisplayMaster();
-		camera.setToOrtho(false, dm.GetWidth(), dm.GetHeight());
+		camera.setToOrtho(false, DisplayMaster.Width(), DisplayMaster.Height());
 		camera.position.x = camPos.x;
 		camera.position.y = camPos.y;
 		camera.zoom = camZoom;
 		camera.update();
 		
-		Engine.Batch().setProjectionMatrix(camera.projection);
-		Engine.Batch().setTransformMatrix(camera.view);
-		Engine.Batch().begin();
+		DisplayMaster.Batch().setProjectionMatrix(camera.projection);
+		DisplayMaster.Batch().setTransformMatrix(camera.view);
 		
 		for(SpriteExt spr : sprites) {
 			spr.CheckResource();
 			if (spr.getTexture() != null)
-				spr.draw(Engine.Batch());
+				spr.draw(DisplayMaster.Batch());
 		}
-		
-		Engine.Batch().end();
 		
 		if (currentSprite != null) {
 			
@@ -573,8 +570,8 @@ public class SpriteLayoutEditor implements DisplayedEntity, InputEntity, Action 
 		iptOrigin.NewInput(input);
 		
 		Vector2 clicPos = new Vector2(
-				-Engine.DisplayMaster().GetWidth()/2  + input.getX(),
-				Engine.DisplayMaster().GetHeight()/2 - input.getY());
+				-DisplayMaster.Width()/2  + input.getX(),
+				DisplayMaster.Height()/2 - input.getY());
 		clicPos.add(camPos);
 		
 		if (iptSelect.wasPressed()) {
@@ -597,18 +594,18 @@ public class SpriteLayoutEditor implements DisplayedEntity, InputEntity, Action 
 					camPos.y += input.getDeltaY();
 				}
 		else if (iptTurn.wasPressed() && currentSprite != null) {
-			Vector2.tmp.set(
+			Tmp.vec2.a.set(
 					currentSprite.getX()+currentSprite.getOriginX(),
 					currentSprite.getY()+currentSprite.getOriginY());
-			Vector2.tmp.sub(clicPos);
-			rotOnClic = Vector2.tmp.angle()-currentSprite.getRotation();
+			Tmp.vec2.a.sub(clicPos);
+			rotOnClic = Tmp.vec2.a.angle()-currentSprite.getRotation();
 		}
 		else if (iptTurn.isPressed() && currentSprite != null) {
-			Vector2.tmp.set(
+			Tmp.vec2.a.set(
 					currentSprite.getX()+currentSprite.getOriginX(),
 					currentSprite.getY()+currentSprite.getOriginY());
-			Vector2.tmp.sub(clicPos);
-			float rot = Vector2.tmp.angle();
+			Tmp.vec2.a.sub(clicPos);
+			float rot = Tmp.vec2.a.angle();
 			currentSprite.setRotation(Angle(rot-rotOnClic));
 			UpdateFields();
 		}

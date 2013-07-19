@@ -10,12 +10,13 @@ import java.util.Map.Entry;
 import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g3d.model.Model;
+import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.jackamikaz.gameengine.assets.Curve;
 import com.jackamikaz.gameengine.assets.SoundCollection;
@@ -25,9 +26,15 @@ public class ResourceManager {
 
 	private HashMap<String, Resource> map;
 	private String prefix = "data/";
+	private AssetManager assetManager;
 	
 	public ResourceManager() {
 		map = new HashMap<String, Resource>();
+		assetManager = new AssetManager();
+	}
+	
+	public AssetManager AssetManager() {
+		return assetManager;
 	}
 	
 	private Object GetImpl(String name) {
@@ -70,6 +77,7 @@ public class ResourceManager {
 		for(String name : map.keySet()) {
 			map.get(name).UnLoad();
 		}
+		assetManager.dispose();
 	}
 	
 	public void ClearResources() {

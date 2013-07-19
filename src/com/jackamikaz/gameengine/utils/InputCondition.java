@@ -1,5 +1,7 @@
 package com.jackamikaz.gameengine.utils;
 
+import com.jackamikaz.gameengine.entities.InputWatcher;
+
 public class InputCondition implements Condition {
 
 	private InputWatcher inputWatcher;

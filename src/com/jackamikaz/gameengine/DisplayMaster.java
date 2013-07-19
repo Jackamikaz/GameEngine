@@ -4,8 +4,14 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.jackamikaz.gameengine.utils.MatrixStack;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.badlogic.gdx.graphics.g3d.lights.Lights;
+//import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.jackamikaz.gameengine.utils.DisplayOrder;
+//import com.jackamikaz.gameengine.utils.MatrixStack;
 import com.jackamikaz.gameengine.utils.SortedList;
 import com.jackamikaz.gameengine.utils.StackOfCollections;
 
@@ -21,9 +27,31 @@ public class DisplayMaster extends StackOfCollections<DisplayedEntity> {
 		
 	}
 	
-	private ShaderProgram replacementShader = null;
+	private SpriteBatch batch;
+	private ModelBatch modelBatch;
+	private Lights lights;
+	//private MatrixStack matrixStack;
+	private Camera camera;
+	
+	public DisplayMaster() {
+		batch = new SpriteBatch();
+		modelBatch = new ModelBatch(/*
+				Gdx.files.internal("data/test.vertex.glsl"),
+				Gdx.files.internal("data/test.fragment.glsl"));//*/);
+		lights = new Lights();
+		//matrixStack = new MatrixStack();
+		camera = new PerspectiveCamera(); 
+	}
+	
+	public static SpriteBatch Batch() {return Engine.DisplayMaster().batch;}
+	public static ModelBatch ModelBatch() {return Engine.DisplayMaster().modelBatch;}
+	public static Lights Lights() {return Engine.DisplayMaster().lights;}
+	//public static MatrixStack MatrixStack() {return Engine.DisplayMaster().matrixStack;}
+	public static Camera Camera() {return Engine.DisplayMaster().camera;}
+	
+	//private ShaderProgram replacementShader = null;
 	private DispEntComp comparator = null;
-	public MatrixStack matrixStack = new MatrixStack();
+	
 	
 	protected SortedList<DisplayedEntity> NewCollection() {
 		if (comparator == null)
@@ -31,16 +59,55 @@ public class DisplayMaster extends StackOfCollections<DisplayedEntity> {
 		return new SortedList<DisplayedEntity>(comparator);
 	}
 	
-	public void Display(float lerp) {
+	public void Display(float gdt, float glerp) {
 		Collection<DisplayedEntity> listEntities = AdjustAndPeek();
+		
+		int curDispRank = -1;
+		boolean using3D = false;
+		boolean using2D = false;
 		
 		Iterator<DisplayedEntity> it = listEntities.iterator();
 		while (it.hasNext()) {
-			it.next().Display(lerp);
+			DisplayedEntity cur = it.next();
+			
+			// check if we need to start or end batches
+			int newDispRank = cur.GetDisplayRank();
+			if (curDispRank != newDispRank) {
+				
+				// 3D Batch
+				if (curDispRank < DisplayOrder.Start3D.ordinal()
+				&&  newDispRank >= DisplayOrder.Start3D.ordinal()) {
+					//camera.update();
+					modelBatch.begin(camera);
+					using3D = true;
+				}
+				
+				// 2D Batch
+				if (curDispRank < DisplayOrder.Start2D.ordinal()
+				&&  newDispRank >= DisplayOrder.Start2D.ordinal()) {
+					if (using3D) {
+						modelBatch.end();
+						using3D = false;
+					}
+					batch.begin();
+					using2D = true;
+				}
+				
+				curDispRank = newDispRank;
+			}
+			
+			// display
+			cur.Display(gdt, glerp);
 		}
+		
+		//end batches if necessary
+		if (using3D)
+			modelBatch.end();
+		if (using2D)
+			batch.end();
 	}
 	
-	public void ExecuteCustomLoop(int[] displayTypes, float lerp) {
+	public void ExecuteCustomLoop(int[] displayTypes, float gdt, float glerp) {
 		Collection<DisplayedEntity> listEntities = Peek();
 		
 		int curDispType = 0;
@@ -59,7 +126,7 @@ public class DisplayMaster extends StackOfCollections<DisplayedEntity> {
 				++curDispType;
 			}
 			else if (displayTypes[curDispType] == curDispRank) {
-				itnext.Display(lerp);
+				itnext.Display(gdt, glerp);
 				itnext = null; //itnext processed;
 			}
 			else {
@@ -68,31 +135,38 @@ public class DisplayMaster extends StackOfCollections<DisplayedEntity> {
 		}
 	}
 	
-	public void SetReplacementShader(ShaderProgram s) {
+	/*public void SetReplacementShader(ShaderProgram s) {
 		replacementShader = s;
 	}
 	
 	public ShaderProgram GetCorrectShader(ShaderProgram s) {
 		return replacementShader == null ? s : replacementShader;
-	}
+	}*/
 	
 	private float width;
 	private float height;
 	
-	public float GetWidth() {
-		return width;
+	public static float Width() {
+		return Engine.DisplayMaster().width;
 	}
 	
-	public float GetHeight() {
-		return height;
+	public static float Height() {
+		return Engine.DisplayMaster().height;
 	}
 	
-	public float GetAspectRatio() {
-		return width / height;
+	public static float AspectRatio() {
+		return Engine.DisplayMaster().width / Engine.DisplayMaster().height;
 	}
 	
 	public void UdpateWidthHeight(float w, float h) {
 		width = w;
 		height = h;
+		camera.viewportWidth = w;
+		camera.viewportHeight = h;
+	}
+	
+	public void dispose() {
+		batch.dispose();
+		modelBatch.dispose();
 	}
 }

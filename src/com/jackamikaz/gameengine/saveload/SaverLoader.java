@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector3;
 
 public interface SaverLoader {
 	
+	boolean processBoolean(boolean b) throws IOException;
 	int processInt(int i) throws IOException;
 	float processFloat(float f) throws IOException;
 	String processString(String s) throws IOException;

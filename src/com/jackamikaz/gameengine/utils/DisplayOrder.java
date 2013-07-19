@@ -1,6 +1,6 @@
 package com.jackamikaz.gameengine.utils;
 
-public enum DisplayOrder {
+public enum DisplayOrder {	
 	Prelight,
 	
 	Start3D,

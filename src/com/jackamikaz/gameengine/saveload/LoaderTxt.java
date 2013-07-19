@@ -34,6 +34,11 @@ public class LoaderTxt implements SaverLoader {
 	}
 
 	@Override
+	public boolean processBoolean(boolean b) throws IOException {
+		return Boolean.parseBoolean(tokens[curToken++]);
+	}
+	
+	@Override
 	public int processInt(int i) throws IOException {
 		return Integer.parseInt(tokens[curToken++]);
 	}

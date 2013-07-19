@@ -13,6 +13,7 @@ public class ResTexture extends Resource {
 
 	@Override
 	public void Load() {
+		// TODO : tell if we use mipmaps or not
 		Texture texture = new Texture(Gdx.files.internal(files[0]));
 		
 		TextureFilter filter = TextureFilter.Linear;
