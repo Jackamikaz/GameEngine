@@ -78,6 +78,18 @@ public class SaverTxt implements SaverLoader {
 	}
 
 	@Override
+	public int[] processIntArray(String name, int[] iarray) throws IOException {
+		newLine();
+		somethingWritten = true;
+		fw.write(name + " " + iarray.length);
+		for(int i=0; i<iarray.length; ++i) {
+			fw.write(" " + iarray[i]);
+		}
+		newLine();
+		return iarray;
+	}
+	
+	@Override
 	public void processArray(String name, int size, SaverLoaderObject obj) throws IOException {
 		newLine();
 		somethingWritten = true;

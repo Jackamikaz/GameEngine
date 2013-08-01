@@ -1,6 +1,7 @@
 package com.jackamikaz.gameengine.utils;
 
 import com.badlogic.gdx.math.Matrix4;
+//import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.jackamikaz.gameengine.DisplayMaster;
@@ -57,4 +58,23 @@ public class Math3D {
 		// out = p1 + mua ( p2 - p1 )
 		out.set(p2).sub(p1).scl(mua).add(p1);
 	}
+	
+	/*static public void Matrix4Slerp(Matrix4 inout, Matrix4 target, float alpha) {
+		Quaternion qf = Tmp.quat.a;
+		Quaternion qt = Tmp.quat.b;
+		
+		Vector3 vf = Tmp.vec3.a;
+		Vector3 vt = Tmp.vec3.b;
+		
+		inout.getRotation(qf);
+		target.getRotation(qt);
+		
+		inout.getTranslation(vf);
+		target.getTranslation(vt);
+		
+		qf.slerp(qt, alpha);
+		vf.lerp(vt, alpha);
+		
+		inout.set(qf).trn(vf);
+	}*/
 }

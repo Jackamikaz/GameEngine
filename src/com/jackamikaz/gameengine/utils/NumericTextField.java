@@ -8,13 +8,25 @@ public class NumericTextField extends JTextField
 {
 	private static final long serialVersionUID = 1L;
 	private float oldValue;
+	
+	public int maxDecimalsShown;
 
-	public NumericTextField(String _initialStr, int _col)
+	public NumericTextField(String _initialStr, int _col, int maxDecimalsShown)
 	{
 		super (_initialStr, _col) ;
-		oldValue = 0.0f;
+		this.oldValue = 0.0f;
+		this.maxDecimalsShown = maxDecimalsShown;
 		
 		Reformat();
+	}
+	
+	public NumericTextField(String _initialStr, int _col) {
+		this (_initialStr, _col, 8);
+	}
+	
+	public NumericTextField (int _col, int maxDecimalsShown) 
+	{ 
+		this ("", _col, maxDecimalsShown); 
 	}
 	
 	public NumericTextField (int _col) 
@@ -72,7 +84,13 @@ public class NumericTextField extends JTextField
 	public void setValue(float val)
 	{
 		oldValue = val;
-		setText(Float.toString(val).replace(',', '.'));
+		String text = String.format("%."+maxDecimalsShown+"f", val);
+		String textBis = Float.toString(val);
+		
+		if (textBis.length() < text.length())
+			text = textBis;
+		
+		setText(text.replace(',', '.'));
 	}
 	
 	public float getValue()

@@ -57,4 +57,19 @@ public class Engine {
 	public static void ClassicLoop() {
 		Loop(Gdx.graphics.getDeltaTime());
 	}
+	
+	public static void SmartAdd(Object entity) {
+		if (entity instanceof InputEntity)
+			instance.inputMaster.Add((InputEntity)entity);
+		if (entity instanceof UpdatedEntity)
+			instance.updateMaster.Add((UpdatedEntity)entity);
+		if (entity instanceof DisplayedEntity)
+			instance.displayMaster.Add((DisplayedEntity)entity);
+	}
+	
+	public static void SmartAdd(Object... entities) {
+		for (Object entity : entities) {
+			SmartAdd(entity);
+		}
+	}
 }

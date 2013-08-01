@@ -74,6 +74,22 @@ public class LoaderTxt implements SaverLoader {
 	}
 	
 	@Override
+	public int[] processIntArray(String name, int[] iarray) throws IOException {
+		newLine();
+		
+		if (!name.equalsIgnoreCase(tokens[curToken++])) {
+			throw new IOException("Unexpected collection, found "+tokens[curToken-1]+" instead of "+name);
+		}
+		
+		int[] array = new int[processInt(0)];
+		for(int i=0; i<array.length; ++i) {
+			array[i] = processInt(0);
+		}
+		
+		return array;
+	}
+	
+	@Override
 	public void processArray(String name, int size, SaverLoaderObject obj) throws IOException {
 		
 		if (curToken > 0)

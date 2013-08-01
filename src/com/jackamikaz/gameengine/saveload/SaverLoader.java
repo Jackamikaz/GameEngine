@@ -17,6 +17,7 @@ public interface SaverLoader {
 	void processVector3(Vector3 vec) throws IOException;
 	void processMatrix4(Matrix4 mat) throws IOException;
 	
+	int[] processIntArray(String name, int[] iarray) throws IOException;
 	void processArray(String name, int size, SaverLoaderObject obj) throws IOException;
 	
 	void processCustom(SaverLoaderObject obj) throws IOException;
