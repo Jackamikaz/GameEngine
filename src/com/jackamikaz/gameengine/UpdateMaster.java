@@ -13,6 +13,7 @@ public class UpdateMaster extends StackOfCollections<UpdatedEntity> {
 	}
 	
 	public void Update(float deltaT) {
+		// fake lag
 		if (fakelag > 0.0f) {
 			consumedLag -= deltaT;
 			if (consumedLag <= 0.0f) {

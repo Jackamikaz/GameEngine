@@ -48,6 +48,12 @@ public class Engine {
 		instance.displayMaster.Pop();
 	}
 	
+	public static void ClearAll() {
+		instance.inputMaster.Clear();
+		instance.updateMaster.Clear();
+		instance.displayMaster.Clear();
+	}
+	
 	public static void Loop(float deltaT) {
 		instance.inputMaster.Update();
 		instance.updateMaster.Update(deltaT);
@@ -70,6 +76,21 @@ public class Engine {
 	public static void SmartAdd(Object... entities) {
 		for (Object entity : entities) {
 			SmartAdd(entity);
+		}
+	}
+	
+	public static void SmartRemove(Object entity) {
+		if (entity instanceof InputEntity)
+			instance.inputMaster.Remove((InputEntity) entity);
+		if (entity instanceof UpdatedEntity)
+			instance.updateMaster.Remove((UpdatedEntity)entity);
+		if (entity instanceof DisplayedEntity)
+			instance.displayMaster.Remove((DisplayedEntity)entity);
+	}
+	
+	public static void SmartRemove(Object... entities) {
+		for (Object entity : entities) {
+			SmartRemove(entity);
 		}
 	}
 }

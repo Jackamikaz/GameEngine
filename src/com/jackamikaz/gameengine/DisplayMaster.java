@@ -4,11 +4,13 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.lights.Lights;
+import com.badlogic.gdx.math.Matrix4;
 //import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.jackamikaz.gameengine.utils.DisplayOrder;
 //import com.jackamikaz.gameengine.utils.MatrixStack;
@@ -168,5 +170,13 @@ public class DisplayMaster extends StackOfCollections<DisplayedEntity> {
 	public void dispose() {
 		batch.dispose();
 		modelBatch.dispose();
+	}
+	
+	public void UpdateCamAndSetView(Matrix4 view) {
+		camera.viewportWidth = width;
+		camera.viewportHeight = height;
+		camera.update();
+		camera.view.set(view);
+		camera.combined.set(camera.projection).mul(camera.view);
 	}
 }

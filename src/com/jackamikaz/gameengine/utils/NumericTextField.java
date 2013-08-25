@@ -46,7 +46,8 @@ public class NumericTextField extends JTextField
 		}
 		else if (c == '-')
 		{
-			if (getCaretPosition() > 0 || getText().contains("-"))
+			String selTex = getSelectedText();
+			if ((selTex == null || !selTex.equals(getText())) && (getCaretPosition() > 0 || getText().contains("-")))
 				return;
 		}
 		else if (k == KeyEvent.VK_ENTER)
