@@ -18,20 +18,20 @@ public class MatrixStack {
 	}
 	
 	//TODO out of bound checks (I'm such a lazy pig)
-	public void Push() {
+	public void push() {
 		++position;
 		stack[position].set(stack[position-1]);
 	}
 	
-	public void Pop() {
+	public void pop() {
 		--position;
 	}
 	
-	public Matrix4 Peek() {
+	public Matrix4 peek() {
 		return stack[position];
 	}
 	
-	public void Reset() {
+	public void reset() {
 		position = 0;
 		stack[0].idt();
 	}

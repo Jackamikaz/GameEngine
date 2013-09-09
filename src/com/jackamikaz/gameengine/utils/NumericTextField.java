@@ -17,7 +17,7 @@ public class NumericTextField extends JTextField
 		this.oldValue = 0.0f;
 		this.maxDecimalsShown = maxDecimalsShown;
 		
-		Reformat();
+		reformat();
 	}
 	
 	public NumericTextField(String _initialStr, int _col) {
@@ -52,7 +52,7 @@ public class NumericTextField extends JTextField
 		}
 		else if (k == KeyEvent.VK_ENTER)
 		{
-			Reformat();
+			reformat();
 		}
 		else
 		if (!( (k == KeyEvent.VK_BACK_SPACE)
@@ -71,13 +71,13 @@ public class NumericTextField extends JTextField
 	{
 		if (e.getID() == FocusEvent.FOCUS_LOST)
 		{
-			Reformat();
+			reformat();
 			fireActionPerformed();
 		}
 		super.processFocusEvent(e);
 	}
 	
-	private void Reformat()
+	private void reformat()
 	{
 		setValue(getValue());
 	}

@@ -13,11 +13,11 @@ public class ResSoundCollection extends Resource {
 	}*/
 	
 	@Override
-	public void Load() {
+	public void load() {
 		Vector<Sound> sounds = new Vector<Sound>();
 		
 		for(int i=0; i<files.length; ++i) {
-			Sound snd = Engine.ResourceManager().GetSound(files[i]);
+			Sound snd = Engine.resourceManager().getSound(files[i]);
 			if (snd != null) {
 				sounds.add(snd);
 			}
@@ -27,12 +27,12 @@ public class ResSoundCollection extends Resource {
 	}
 
 	@Override
-	protected void UnLoadImpl() {
+	protected void unLoadImpl() {
 	}
 
 	
 	@Override
-	public String GetResName() {
+	public String getResName() {
 		return "SoundCollection";
 	}
 

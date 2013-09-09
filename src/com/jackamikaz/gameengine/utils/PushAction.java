@@ -11,8 +11,8 @@ public class PushAction implements Action {
 	}
 
 	@Override
-	public void DoAction() {
-		entitySet.Push();
+	public void doAction() {
+		entitySet.push();
 	}
 
 }

@@ -4,5 +4,5 @@ import com.badlogic.gdx.Input;
 
 public interface InputEntity {
 
-	public void NewInput(Input input);
+	public void newInput(Input input);
 }

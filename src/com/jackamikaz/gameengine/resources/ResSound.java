@@ -10,19 +10,19 @@ public class ResSound extends Resource {
 	}*/
 
 	@Override
-	public void Load() {
+	public void load() {
 		Sound sound = Gdx.audio.newSound(Gdx.files.internal(files[0]));
 		
 		resObj = sound;
 	}
 
 	@Override
-	protected void UnLoadImpl() {
+	protected void unLoadImpl() {
 		((Sound)resObj).dispose();
 	}
 
 	@Override
-	public String GetResName() {
+	public String getResName() {
 		return "Sound";
 	}
 

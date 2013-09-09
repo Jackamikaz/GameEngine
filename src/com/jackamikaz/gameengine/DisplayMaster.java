@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 
-import com.badlogic.gdx.Gdx;
+//import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -24,7 +24,7 @@ public class DisplayMaster extends StackOfCollections<DisplayedEntity> {
 
 		@Override
 		public int compare(DisplayedEntity a, DisplayedEntity b) {
-			return a.GetDisplayRank() - b.GetDisplayRank();
+			return a.getDisplayRank() - b.getDisplayRank();
 		}
 		
 	}
@@ -45,24 +45,24 @@ public class DisplayMaster extends StackOfCollections<DisplayedEntity> {
 		camera = new PerspectiveCamera(); 
 	}
 	
-	public static SpriteBatch Batch() {return Engine.DisplayMaster().batch;}
-	public static ModelBatch ModelBatch() {return Engine.DisplayMaster().modelBatch;}
-	public static Lights Lights() {return Engine.DisplayMaster().lights;}
+	public static SpriteBatch batch() {return Engine.displayMaster().batch;}
+	public static ModelBatch modelBatch() {return Engine.displayMaster().modelBatch;}
+	public static Lights lights() {return Engine.displayMaster().lights;}
 	//public static MatrixStack MatrixStack() {return Engine.DisplayMaster().matrixStack;}
-	public static Camera Camera() {return Engine.DisplayMaster().camera;}
+	public static Camera camera() {return Engine.displayMaster().camera;}
 	
 	//private ShaderProgram replacementShader = null;
 	private DispEntComp comparator = null;
 	
 	
-	protected SortedList<DisplayedEntity> NewCollection() {
+	protected SortedList<DisplayedEntity> newCollection() {
 		if (comparator == null)
 			comparator = new DispEntComp();
 		return new SortedList<DisplayedEntity>(comparator);
 	}
 	
-	public void Display(float gdt, float glerp) {
-		Collection<DisplayedEntity> listEntities = AdjustAndPeek();
+	public void display(float gdt, float glerp) {
+		Collection<DisplayedEntity> listEntities = adjustAndPeek();
 		
 		int curDispRank = -1;
 		boolean using3D = false;
@@ -73,7 +73,7 @@ public class DisplayMaster extends StackOfCollections<DisplayedEntity> {
 			DisplayedEntity cur = it.next();
 			
 			// check if we need to start or end batches
-			int newDispRank = cur.GetDisplayRank();
+			int newDispRank = cur.getDisplayRank();
 			if (curDispRank != newDispRank) {
 				
 				// 3D Batch
@@ -99,7 +99,7 @@ public class DisplayMaster extends StackOfCollections<DisplayedEntity> {
 			}
 			
 			// display
-			cur.Display(gdt, glerp);
+			cur.display(gdt, glerp);
 		}
 		
 		//end batches if necessary
@@ -109,8 +109,8 @@ public class DisplayMaster extends StackOfCollections<DisplayedEntity> {
 			batch.end();
 	}
 	
-	public void ExecuteCustomLoop(int[] displayTypes, float gdt, float glerp) {
-		Collection<DisplayedEntity> listEntities = Peek();
+	public void executeCustomLoop(int[] displayTypes, float gdt, float glerp) {
+		Collection<DisplayedEntity> listEntities = peek();
 		
 		int curDispType = 0;
 		
@@ -122,13 +122,13 @@ public class DisplayMaster extends StackOfCollections<DisplayedEntity> {
 			if (itnext == null) // new itnext needs to be processed
 				itnext = it.next();
 			
-			int curDispRank = itnext.GetDisplayRank();
+			int curDispRank = itnext.getDisplayRank();
 			
 			if (displayTypes[curDispType] < curDispRank) {
 				++curDispType;
 			}
 			else if (displayTypes[curDispType] == curDispRank) {
-				itnext.Display(gdt, glerp);
+				itnext.display(gdt, glerp);
 				itnext = null; //itnext processed;
 			}
 			else {
@@ -137,30 +137,30 @@ public class DisplayMaster extends StackOfCollections<DisplayedEntity> {
 		}
 	}
 	
-	/*public void SetReplacementShader(ShaderProgram s) {
+	/*public void setReplacementShader(ShaderProgram s) {
 		replacementShader = s;
 	}
 	
-	public ShaderProgram GetCorrectShader(ShaderProgram s) {
+	public ShaderProgram getCorrectShader(ShaderProgram s) {
 		return replacementShader == null ? s : replacementShader;
 	}*/
 	
 	private float width;
 	private float height;
 	
-	public static float Width() {
-		return Engine.DisplayMaster().width;
+	public static float width() {
+		return Engine.displayMaster().width;
 	}
 	
-	public static float Height() {
-		return Engine.DisplayMaster().height;
+	public static float height() {
+		return Engine.displayMaster().height;
 	}
 	
-	public static float AspectRatio() {
-		return Engine.DisplayMaster().width / Engine.DisplayMaster().height;
+	public static float aspectRatio() {
+		return Engine.displayMaster().width / Engine.displayMaster().height;
 	}
 	
-	public void UdpateWidthHeight(float w, float h) {
+	public void udpateWidthHeight(float w, float h) {
 		width = w;
 		height = h;
 		camera.viewportWidth = w;
@@ -172,7 +172,7 @@ public class DisplayMaster extends StackOfCollections<DisplayedEntity> {
 		modelBatch.dispose();
 	}
 	
-	public void UpdateCamAndSetView(Matrix4 view) {
+	public void updateCamAndSetView(Matrix4 view) {
 		camera.viewportWidth = width;
 		camera.viewportHeight = height;
 		camera.update();

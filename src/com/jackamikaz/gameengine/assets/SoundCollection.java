@@ -11,18 +11,18 @@ public class SoundCollection {
 		sounds = snds;
 	}
 	
-	public Sound Get(int id) {
+	public Sound get(int id) {
 		return sounds[id];
 	}
 	
-	public Sound LoopGet(int id) {
+	public Sound loopGet(int id) {
 		id = id % sounds.length;
 		if (id < 0)
 			id += sounds.length;
 		return sounds[id];
 	}
 	
-	public Sound RandomGet() {
+	public Sound randomGet() {
 		return sounds[MathUtils.random(sounds.length-1)];
 	}
 }

@@ -3,11 +3,11 @@ package com.jackamikaz.gameengine.utils;
 import java.util.Collection;
 
 public interface IStackOfCollections<obj> {
-	public void Add(obj entity);
-	public void Remove(obj entity);
+	public void add(obj entity);
+	public void remove(obj entity);
 	
-	public void Push(Collection<obj> entityList);
-	public void Push();
+	public void push(Collection<obj> entityList);
+	public void push();
 	
-	public void Pop();
+	public void pop();
 }

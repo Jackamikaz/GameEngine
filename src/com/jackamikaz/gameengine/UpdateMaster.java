@@ -8,11 +8,11 @@ import com.jackamikaz.gameengine.utils.StackOfCollections;
 
 public class UpdateMaster extends StackOfCollections<UpdatedEntity> {
 	
-	protected LinkedList<UpdatedEntity> NewCollection() {
+	protected LinkedList<UpdatedEntity> newCollection() {
 		return new LinkedList<UpdatedEntity>();
 	}
 	
-	public void Update(float deltaT) {
+	public void update(float deltaT) {
 		// fake lag
 		if (fakelag > 0.0f) {
 			consumedLag -= deltaT;
@@ -24,11 +24,11 @@ public class UpdateMaster extends StackOfCollections<UpdatedEntity> {
 				return;
 		}
 		
-		Collection<UpdatedEntity> listEntities = AdjustAndPeek();
+		Collection<UpdatedEntity> listEntities = adjustAndPeek();
 		
 		Iterator<UpdatedEntity> it = listEntities.iterator();
 		while (it.hasNext()) {
-			it.next().Update(deltaT*timeStretch);
+			it.next().update(deltaT*timeStretch);
 		}
 	}
 	
@@ -36,16 +36,16 @@ public class UpdateMaster extends StackOfCollections<UpdatedEntity> {
 	private float fakelag = 0.0f;
 	private float consumedLag = 0.0f;
 	
-	public void StretchTime(float stretch) {
+	public void stretchTime(float stretch) {
 		if (stretch > 0.01f)
 			timeStretch = stretch;
 	}
 	
-	public float GetTimeStretch() {
+	public float getTimeStretch() {
 		return timeStretch;
 	}
 	
-	public void FakeLag(float deltaT) {
+	public void fakeLag(float deltaT) {
 		fakelag = deltaT;
 	}
 }

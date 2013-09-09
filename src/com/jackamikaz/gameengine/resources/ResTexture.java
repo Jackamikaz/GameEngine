@@ -12,7 +12,7 @@ public class ResTexture extends Resource {
 	}*/
 
 	@Override
-	public void Load() {
+	public void load() {
 		// TODO : tell if we use mipmaps or not
 		Texture texture = new Texture(Gdx.files.internal(files[0]));
 		
@@ -44,12 +44,12 @@ public class ResTexture extends Resource {
 	}
 
 	@Override
-	public void UnLoadImpl() {
+	public void unLoadImpl() {
 		((Texture)resObj).dispose();
 	}
 
 	@Override
-	public String GetResName() {
+	public String getResName() {
 		return "Texture";
 	}
 

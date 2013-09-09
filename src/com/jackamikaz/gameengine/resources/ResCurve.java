@@ -10,18 +10,18 @@ public class ResCurve extends Resource {
 	}*/
 
 	@Override
-	public void Load() {
+	public void load() {
 		Curve curve = new Curve(Gdx.files.internal(files[0]));
 		
 		resObj = curve;
 	}
 
 	@Override
-	public void UnLoadImpl() {
+	public void unLoadImpl() {
 	}
 
 	@Override
-	public String GetResName() {
+	public String getResName() {
 		return "Curve";
 	}
 

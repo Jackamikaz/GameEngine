@@ -18,7 +18,7 @@ public abstract class StackOfCollections<obj> implements IStackOfCollections<obj
 			toBeRemoved = tbr;
 		}
 		
-		public void AdjustCollection() {
+		public void adjustCollection() {
 			collection.addAll(toBeAdded);
 			collection.removeAll(toBeRemoved);
 			
@@ -31,34 +31,34 @@ public abstract class StackOfCollections<obj> implements IStackOfCollections<obj
 
 	protected StackOfCollections() {
 		entities = new Stack<Collec<obj>>();
-		Push();
+		push();
 	}
 	
-	public void Add(obj entity) {
+	public void add(obj entity) {
 		entities.peek().toBeAdded.add(entity);
 	}
-	public void Remove(obj entity) {
+	public void remove(obj entity) {
 		entities.peek().toBeRemoved.add(entity);
 	}
 	
-	public void Push(Collection<obj> entityList) {
+	public void push(Collection<obj> entityList) {
 		entities.push(
-				new Collec<obj>(entityList,NewCollection(),NewCollection()));
+				new Collec<obj>(entityList,newCollection(),newCollection()));
 	}
-	public void Push() {Push(NewCollection());}
-	protected abstract Collection<obj> NewCollection();
+	public void push() {push(newCollection());}
+	protected abstract Collection<obj> newCollection();
 	
-	public void Pop() {entities.pop();}
+	public void pop() {entities.pop();}
 	
-	public void Clear() {entities.clear(); Push();}
+	public void clear() {entities.clear(); push();}
 	
-	protected Collection<obj> AdjustAndPeek() {
+	protected Collection<obj> adjustAndPeek() {
 		Collec<obj> collec = entities.peek();
-		collec.AdjustCollection();
+		collec.adjustCollection();
 		return collec.collection;
 	}
 	
-	public Collection<obj> Peek() {
+	public Collection<obj> peek() {
 		return entities.peek().collection;
 	}
 }

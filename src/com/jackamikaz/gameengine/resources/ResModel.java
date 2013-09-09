@@ -8,23 +8,23 @@ import com.jackamikaz.gameengine.Engine;
 public class ResModel extends Resource {
 
 	@Override
-	public void Load() {
+	public void load() {
 		
 		Model model = null;
 		
-		ModelLoader<?> loader = (ModelLoader<?>)Engine.ResourceManager().AssetManager().getLoader(Model.class, files[0]);
+		ModelLoader<?> loader = (ModelLoader<?>)Engine.resourceManager().assetManager().getLoader(Model.class, files[0]);
 		model = loader.loadModel(Gdx.files.internal(files[0]));
 		
 		resObj = model;
 	}
 
 	@Override
-	protected void UnLoadImpl() {
+	protected void unLoadImpl() {
 		((Model)resObj).dispose();		
 	}
 
 	@Override
-	public String GetResName() {
+	public String getResName() {
 		return "Model";
 	}
 

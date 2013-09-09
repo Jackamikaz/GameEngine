@@ -10,29 +10,29 @@ public abstract class Resource {
 		resObj = null;
 	}
 	
-	public void SetFiles(String[] f) {
+	public void setFiles(String[] f) {
 		files = f;
 	}
 	
-	public abstract void Load();
-	public void UnLoad() {
+	public abstract void load();
+	public void unLoad() {
 		if (resObj != null) {
-			UnLoadImpl();
+			unLoadImpl();
 			resObj = null;
 		}
 	}
 	
-	protected abstract void UnLoadImpl();
+	protected abstract void unLoadImpl();
 	
-	public Object Get() {
+	public Object get() {
 		if (resObj == null)
-			Load();
+			load();
 		return resObj;
 	}
 	
-	public abstract String GetResName();
+	public abstract String getResName();
 	
-	public Object GetResObject() {
+	public Object getResObject() {
 		return resObj;
 	}
 }

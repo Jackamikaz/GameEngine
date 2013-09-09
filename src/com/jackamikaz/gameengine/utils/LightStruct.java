@@ -20,7 +20,7 @@ public class LightStruct {
 	public float spotCosAngle = 0.0f;
 	public float spotCosAttenuation = 0.0f;
 	
-	public void SetUniforms(ShaderProgram s, int index) {
+	public void setUniforms(ShaderProgram s, int index) {
 		s.begin();
 		
 		String prefix = "lights["+((char)('0'+index))+"].";
@@ -38,7 +38,7 @@ public class LightStruct {
 		s.end();
 	}
 	
-	public void BindShadowMap(Texture sm, int index) {
+	public void bindShadowMap(Texture sm, int index) {
 		sm.bind(1+index);
 		Gdx.gl.glActiveTexture(GL10.GL_TEXTURE0);
 	}

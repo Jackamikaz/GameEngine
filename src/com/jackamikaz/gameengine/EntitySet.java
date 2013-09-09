@@ -17,11 +17,11 @@ public class EntitySet {
 	public EntitySet(Object... entities) {
 		this();
 		for(Object entity : entities) {
-			SmartAdd(entity);
+			smartAdd(entity);
 		}
 	}
 	
-	public void SmartAdd(Object entity) {
+	public void smartAdd(Object entity) {
 		if (entity instanceof InputEntity)
 			input.add((InputEntity)entity);
 		if (entity instanceof UpdatedEntity)
@@ -30,9 +30,9 @@ public class EntitySet {
 			displayed.add((DisplayedEntity)entity);
 	}
 	
-	public void Push() {
-		Engine.InputMaster().Push(input);
-		Engine.UpdateMaster().Push(updated);
-		Engine.DisplayMaster().Push(displayed);
+	public void push() {
+		Engine.inputMaster().push(input);
+		Engine.updateMaster().push(updated);
+		Engine.displayMaster().push(displayed);
 	}
 }

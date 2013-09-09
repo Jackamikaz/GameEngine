@@ -18,7 +18,7 @@ public class IMRUtils {
 	private static Vector3 G = new Vector3(1,1,1);
 	private static Vector3 H = new Vector3(0,1,1);
 	
-	public static void WireCube(ImmediateModeRenderer renderer, Matrix4 mat, float r, float g, float b, float a) {
+	public static void wireCube(ImmediateModeRenderer renderer, Matrix4 mat, float r, float g, float b, float a) {
 		renderer.begin(mat, GL10.GL_LINES);
 		
 		rendererLine(renderer,A,B,r,g,b,a);
@@ -47,7 +47,7 @@ public class IMRUtils {
 		renderer.vertex(p2.x, p2.y, p2.z);
 	}
 	
-	public static void Cube(ImmediateModeRenderer renderer, Matrix4 mat, float r, float g, float b, float a) {
+	public static void cube(ImmediateModeRenderer renderer, Matrix4 mat, float r, float g, float b, float a) {
 		renderer.begin(mat, GL10.GL_TRIANGLES);
 		
 		rendererFace(renderer, D,C,B,A, r,g,b,a);
@@ -80,7 +80,7 @@ public class IMRUtils {
 		renderer.vertex(p4.x, p4.y, p4.z);
 	}
 	
-	public static void Square(ImmediateModeRenderer renderer, Vector2 pos2D, float halfSize, Matrix4 viewProj, float r, float g, float b) {
+	public static void square(ImmediateModeRenderer renderer, Vector2 pos2D, float halfSize, Matrix4 viewProj, float r, float g, float b) {
 		
 		renderer.begin(viewProj, GL10.GL_LINE_LOOP);
 		

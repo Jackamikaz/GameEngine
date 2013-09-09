@@ -10,7 +10,7 @@ public class ResFont extends Resource {
 	}*/
 
 	@Override
-	public void Load() {
+	public void load() {
 		BitmapFont font = new BitmapFont(
 			Gdx.files.internal(files[0]),
 			Gdx.files.internal(files[1]), false);
@@ -19,12 +19,12 @@ public class ResFont extends Resource {
 	}
 
 	@Override
-	public void UnLoadImpl() {
+	public void unLoadImpl() {
 		((BitmapFont)resObj).dispose();
 	}
 
 	@Override
-	public String GetResName() {
+	public String getResName() {
 		return "Font";
 	}
 

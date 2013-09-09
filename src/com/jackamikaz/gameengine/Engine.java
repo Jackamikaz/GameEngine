@@ -21,76 +21,76 @@ public class Engine {
 		displayMaster = new DisplayMaster();
 	}
 	
-	public static ResourceManager ResourceManager() {return instance.resourceManager;}
-	public static InputMaster InputMaster() {return instance.inputMaster;}
-	public static UpdateMaster UpdateMaster() {return instance.updateMaster;}
-	public static DisplayMaster DisplayMaster() {return instance.displayMaster;}
+	public static ResourceManager resourceManager() {return instance.resourceManager;}
+	public static InputMaster inputMaster() {return instance.inputMaster;}
+	public static UpdateMaster updateMaster() {return instance.updateMaster;}
+	public static DisplayMaster displayMaster() {return instance.displayMaster;}
 	
-	public static void Init() {
+	public static void init() {
 		instance = new Engine();
 	}
 	
-	public static void Quit() {
-		instance.resourceManager.ClearResources();
+	public static void quit() {
+		instance.resourceManager.clearResources();
 		instance.displayMaster.dispose();
 		instance = null;
 	}
 	
-	public static void PushAll() {
-		instance.inputMaster.Push();
-		instance.updateMaster.Push();
-		instance.displayMaster.Push();
+	public static void pushAll() {
+		instance.inputMaster.push();
+		instance.updateMaster.push();
+		instance.displayMaster.push();
 	}
 	
-	public static void PopAll() {
-		instance.inputMaster.Pop();
-		instance.updateMaster.Pop();
-		instance.displayMaster.Pop();
+	public static void popAll() {
+		instance.inputMaster.pop();
+		instance.updateMaster.pop();
+		instance.displayMaster.pop();
 	}
 	
-	public static void ClearAll() {
-		instance.inputMaster.Clear();
-		instance.updateMaster.Clear();
-		instance.displayMaster.Clear();
+	public static void clearAll() {
+		instance.inputMaster.clear();
+		instance.updateMaster.clear();
+		instance.displayMaster.clear();
 	}
 	
-	public static void Loop(float deltaT) {
-		instance.inputMaster.Update();
-		instance.updateMaster.Update(deltaT);
-		instance.displayMaster.Display(deltaT,0.0f); // todo : graphical lerp with fixed update
+	public static void loop(float deltaT) {
+		instance.inputMaster.update();
+		instance.updateMaster.update(deltaT);
+		instance.displayMaster.display(deltaT,0.0f); // todo : graphical lerp with fixed update
 	}
 	
-	public static void ClassicLoop() {
-		Loop(Gdx.graphics.getDeltaTime());
+	public static void classicLoop() {
+		loop(Gdx.graphics.getDeltaTime());
 	}
 	
-	public static void SmartAdd(Object entity) {
+	public static void smartAdd(Object entity) {
 		if (entity instanceof InputEntity)
-			instance.inputMaster.Add((InputEntity)entity);
+			instance.inputMaster.add((InputEntity)entity);
 		if (entity instanceof UpdatedEntity)
-			instance.updateMaster.Add((UpdatedEntity)entity);
+			instance.updateMaster.add((UpdatedEntity)entity);
 		if (entity instanceof DisplayedEntity)
-			instance.displayMaster.Add((DisplayedEntity)entity);
+			instance.displayMaster.add((DisplayedEntity)entity);
 	}
 	
-	public static void SmartAdd(Object... entities) {
+	public static void smartAdd(Object... entities) {
 		for (Object entity : entities) {
-			SmartAdd(entity);
+			smartAdd(entity);
 		}
 	}
 	
-	public static void SmartRemove(Object entity) {
+	public static void smartRemove(Object entity) {
 		if (entity instanceof InputEntity)
-			instance.inputMaster.Remove((InputEntity) entity);
+			instance.inputMaster.remove((InputEntity) entity);
 		if (entity instanceof UpdatedEntity)
-			instance.updateMaster.Remove((UpdatedEntity)entity);
+			instance.updateMaster.remove((UpdatedEntity)entity);
 		if (entity instanceof DisplayedEntity)
-			instance.displayMaster.Remove((DisplayedEntity)entity);
+			instance.displayMaster.remove((DisplayedEntity)entity);
 	}
 	
-	public static void SmartRemove(Object... entities) {
+	public static void smartRemove(Object... entities) {
 		for (Object entity : entities) {
-			SmartRemove(entity);
+			smartRemove(entity);
 		}
 	}
 }

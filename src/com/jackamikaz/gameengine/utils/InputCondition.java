@@ -11,7 +11,7 @@ public class InputCondition implements Condition {
 	}
 	
 	@Override
-	public boolean Test() {
+	public boolean test() {
 		return inputWatcher.wasPressed();
 	}
 	

@@ -6,19 +6,19 @@ import com.badlogic.gdx.audio.Music;
 public class ResMusic extends Resource {
 
 	@Override
-	public void Load() {
+	public void load() {
 		Music music = Gdx.audio.newMusic(Gdx.files.internal(files[0]));
 		
 		resObj = music;
 	}
 
 	@Override
-	protected void UnLoadImpl() {
+	protected void unLoadImpl() {
 		((Music)resObj).dispose();
 	}
 
 	@Override
-	public String GetResName() {
+	public String getResName() {
 		return "Music";
 	}
 

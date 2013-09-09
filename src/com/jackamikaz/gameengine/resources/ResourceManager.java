@@ -33,32 +33,32 @@ public class ResourceManager {
 		assetManager = new AssetManager();
 	}
 	
-	public AssetManager AssetManager() {
+	public AssetManager assetManager() {
 		return assetManager;
 	}
 	
-	private Object GetImpl(String name) {
+	private Object getImpl(String name) {
 		Resource res = map.get(name);
 		if (res != null)
-			return res.Get();
+			return res.get();
 		
 		System.out.println("Resource "+name+" was not found.");
 		return null;
 	}
 	
-	public Texture GetTexture(String name) {return (Texture)(GetImpl(name));}
-	public TextureRegion[] GetTextureSheet(String name) {return (TextureRegion[])(GetImpl(name));}
-	public BitmapFont GetFont(String name) {return (BitmapFont)(GetImpl(name));}
-	public ShaderProgram GetShader(String name) {return (ShaderProgram)(GetImpl(name));}
-	public Model GetModel(String name) {return (Model)(GetImpl(name));}
-	public Curve GetCurve(String name) {return (Curve)(GetImpl(name));}
-	public SpriteLayout GetLayout(String name) {return (SpriteLayout)(GetImpl(name));}
-	public Sound GetSound(String name) {return (Sound)(GetImpl(name));}
-	public SoundCollection GetSoundCollection(String name) {return (SoundCollection)(GetImpl(name));}
-	public Music GetMusic(String name) {return (Music)(GetImpl(name));}
-	public float GetFloat(String name) {return (Float)(GetImpl(name));}
+	public Texture getTexture(String name) {return (Texture)(getImpl(name));}
+	public TextureRegion[] getTextureSheet(String name) {return (TextureRegion[])(getImpl(name));}
+	public BitmapFont getFont(String name) {return (BitmapFont)(getImpl(name));}
+	public ShaderProgram getShader(String name) {return (ShaderProgram)(getImpl(name));}
+	public Model getModel(String name) {return (Model)(getImpl(name));}
+	public Curve getCurve(String name) {return (Curve)(getImpl(name));}
+	public SpriteLayout getLayout(String name) {return (SpriteLayout)(getImpl(name));}
+	public Sound getSound(String name) {return (Sound)(getImpl(name));}
+	public SoundCollection getSoundCollection(String name) {return (SoundCollection)(getImpl(name));}
+	public Music getMusic(String name) {return (Music)(getImpl(name));}
+	public float getFloat(String name) {return (Float)(getImpl(name));}
 	
-	public String[] ExtractResourceNameOfType(Class<?> cl) {
+	public String[] extractResourceNameOfType(Class<?> cl) {
 		
 		Vector<String> vec = new Vector<String>();
 		
@@ -73,23 +73,23 @@ public class ResourceManager {
 		return vec.toArray(new String[1]);
 	}
 	
-	public void UnloadResources() {
+	public void unloadResources() {
 		for(String name : map.keySet()) {
-			map.get(name).UnLoad();
+			map.get(name).unLoad();
 		}
 		assetManager.dispose();
 	}
 	
-	public void ClearResources() {
-		UnloadResources();
+	public void clearResources() {
+		unloadResources();
 		map.clear();
 	}
 	
-	public void LoadResourcesFile(String filename) {
-		LoadResourcesFile(filename, false);
+	public void loadResourcesFile(String filename) {
+		loadResourcesFile(filename, false);
 	}
 	
-	public void LoadResourcesFile(String filename, boolean preloadAll) {
+	public void loadResourcesFile(String filename, boolean preloadAll) {
 		InputStream in = Gdx.files.internal(prefix+filename).read();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 		String line;
@@ -98,17 +98,17 @@ public class ResourceManager {
 			while (line != null) {
 				String[] tokens = line.split("[ ]+");
 				
-				if (!AddResource(new ResTexture()			, tokens, 1))
-				if (!AddResource(new ResTextureSheet()		, tokens, 0))
-				if (!AddResource(new ResFont()				, tokens, 2))
-				if (!AddResource(new ResShader()			, tokens, 2))
-				if (!AddResource(new ResModel()				, tokens, 1))
-				if (!AddResource(new ResCurve()				, tokens, 1))
-				if (!AddResource(new ResSpriteLayout()		, tokens, 1))
-				if (!AddResource(new ResSound()				, tokens, 1))
-				if (!AddResource(new ResSoundCollection()	, tokens, 0))
-				if (!AddResource(new ResMusic()				, tokens, 1))
-					 AddResource(new ResFloat()				, tokens, 0);
+				if (!addResource(new ResTexture()			, tokens, 1))
+				if (!addResource(new ResTextureSheet()		, tokens, 0))
+				if (!addResource(new ResFont()				, tokens, 2))
+				if (!addResource(new ResShader()			, tokens, 2))
+				if (!addResource(new ResModel()				, tokens, 1))
+				if (!addResource(new ResCurve()				, tokens, 1))
+				if (!addResource(new ResSpriteLayout()		, tokens, 1))
+				if (!addResource(new ResSound()				, tokens, 1))
+				if (!addResource(new ResSoundCollection()	, tokens, 0))
+				if (!addResource(new ResMusic()				, tokens, 1))
+					 addResource(new ResFloat()				, tokens, 0);
 				
 				line = reader.readLine();
 			}
@@ -119,8 +119,8 @@ public class ResourceManager {
 		}
 	}
 	
-	private boolean AddResource(Resource res, String[] tokens, int prefixes) {
-		if (tokens[0].equalsIgnoreCase(res.GetResName())) {
+	private boolean addResource(Resource res, String[] tokens, int prefixes) {
+		if (tokens[0].equalsIgnoreCase(res.getResName())) {
 			String[] args = new String[tokens.length-2];
 			
 			for(int i=0; i<args.length; ++i) {
@@ -130,7 +130,7 @@ public class ResourceManager {
 					args[i] = tokens[i+2];
 			}
 			
-			res.SetFiles(args);
+			res.setFiles(args);
 			
 			map.put(tokens[1], res);
 			return true;
@@ -138,12 +138,12 @@ public class ResourceManager {
 		return false;
 	}
 	
-	public String FindNameFromResource(Object res) {
+	public String findNameFromResource(Object res) {
 		if (res == null)
 			return "";
 		
 		for(Entry<String, Resource> entry : map.entrySet()) {
-			if (entry.getValue().GetResObject() == res)
+			if (entry.getValue().getResObject() == res)
 				return entry.getKey();
 		}
 		

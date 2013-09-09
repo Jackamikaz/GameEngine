@@ -10,26 +10,26 @@ public class Math3D {
 	
 	private static Matrix4 tmpMat = new Matrix4();
 	
-	public static boolean IsMouseAtPos(final Vector3 pos, final Vector2 mousePos, final Matrix4 viewProj)
+	public static boolean isMouseAtPos(final Vector3 pos, final Vector2 mousePos, final Matrix4 viewProj)
 	{
-		Tmp.vec2.b.set(SpaceToScreen(pos,viewProj)).sub(mousePos);
+		Tmp.vec2.b.set(spaceToScreen(pos,viewProj)).sub(mousePos);
 		return Tmp.vec2.b.len2() < 25.0f;
 	}
 	
-	public static Vector2 SpaceToScreen(final Vector3 spacepos, final Matrix4 viewProj)
+	public static Vector2 spaceToScreen(final Vector3 spacepos, final Matrix4 viewProj)
 	{
 		Vector3 tr = spacepos.cpy().prj(viewProj);
 		
-		Tmp.vec2.c.x = (tr.x + 1.0f)*0.5f*DisplayMaster.Width();
-		Tmp.vec2.c.y = (tr.y + 1.0f)*0.5f*DisplayMaster.Height();
+		Tmp.vec2.c.x = (tr.x + 1.0f)*0.5f*DisplayMaster.width();
+		Tmp.vec2.c.y = (tr.y + 1.0f)*0.5f*DisplayMaster.height();
 		
 		return Tmp.vec2.c;
 	}
 	
-	public static void FollowMouseAlongLine(Matrix4 proj, Matrix4 view, Vector2 mousePos, Vector3 origPos, Vector3 dirPos, Vector3 out)
+	public static void followMouseAlongLine(Matrix4 proj, Matrix4 view, Vector2 mousePos, Vector3 origPos, Vector3 dirPos, Vector3 out)
 	{
-		float normMX = (mousePos.x / DisplayMaster.Width()) * 2.0f - 1.0f;
-		float normMY = (mousePos.y / DisplayMaster.Height()) * 2.0f - 1.0f;
+		float normMX = (mousePos.x / DisplayMaster.width()) * 2.0f - 1.0f;
+		float normMY = (mousePos.y / DisplayMaster.height()) * 2.0f - 1.0f;
 		
 		tmpMat.set(view).inv();
 		
@@ -40,11 +40,11 @@ public class Math3D {
 		
 		Vector3 campos = Tmp.vec3.c.set(tmpMat.val[Matrix4.M03],tmpMat.val[Matrix4.M13],tmpMat.val[Matrix4.M23]);
 		
-		GetClosestPointBetweenTwoLines(origPos, dirPos, campos, mouseray, out);
+		getClosestPointBetweenTwoLines(origPos, dirPos, campos, mouseray, out);
 	}
 	
 	//http://paulbourke.net/geometry/lineline3d/
-	static public void GetClosestPointBetweenTwoLines(Vector3 p1, Vector3 p2, Vector3 p3, Vector3 p4, Vector3 out)
+	static public void getClosestPointBetweenTwoLines(Vector3 p1, Vector3 p2, Vector3 p3, Vector3 p4, Vector3 out)
 	{
 		//float dxxxx = (p.x - p.x)*(p.x - p.x) + (p.y - p.y)*(p.y - p.y) + (p.z - p.z)*(p.z - p.z);
 		float d1343 = (p1.x - p3.x)*(p4.x - p3.x) + (p1.y - p3.y)*(p4.y - p3.y) + (p1.z - p3.z)*(p4.z - p3.z);
@@ -59,7 +59,7 @@ public class Math3D {
 		out.set(p2).sub(p1).scl(mua).add(p1);
 	}
 	
-	/*static public void Matrix4Slerp(Matrix4 inout, Matrix4 target, float alpha) {
+	/*static public void matrix4Slerp(Matrix4 inout, Matrix4 target, float alpha) {
 		Quaternion qf = Tmp.quat.a;
 		Quaternion qt = Tmp.quat.b;
 		

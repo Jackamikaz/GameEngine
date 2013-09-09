@@ -9,16 +9,16 @@ import com.jackamikaz.gameengine.utils.StackOfCollections;
 
 public class InputMaster extends StackOfCollections<InputEntity> {
 
-	protected LinkedList<InputEntity> NewCollection() {
+	protected LinkedList<InputEntity> newCollection() {
 		return new LinkedList<InputEntity>();
 	}
 	
-	public void Update() {
-		Collection<InputEntity> listEntities = AdjustAndPeek();
+	public void update() {
+		Collection<InputEntity> listEntities = adjustAndPeek();
 		
 		Iterator<InputEntity> it = listEntities.iterator();
 		while (it.hasNext()) {
-			it.next().NewInput(Gdx.input);
+			it.next().newInput(Gdx.input);
 		}
 	}
 	

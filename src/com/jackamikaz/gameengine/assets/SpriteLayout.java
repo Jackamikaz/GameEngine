@@ -48,7 +48,7 @@ public class SpriteLayout {
 					return;
 				}
 				
-				SpriteExt spr = new SpriteExt(Engine.ResourceManager().GetTexture(tokens[1]));
+				SpriteExt spr = new SpriteExt(Engine.resourceManager().getTexture(tokens[1]));
 				spr.name = tokens[0];
 				spr.setPosition(Float.parseFloat(tokens[2]), Float.parseFloat(tokens[3]));
 				if (tokens.length >= 6)
@@ -83,7 +83,7 @@ public class SpriteLayout {
 		}
 	}
 	
-	public Sprite GetByName(String name) {
+	public Sprite getByName(String name) {
 		for(SpriteExt spr : sprites) {
 			if (spr.name.equalsIgnoreCase(name))
 				return spr;
@@ -91,7 +91,7 @@ public class SpriteLayout {
 		return null;
 	}
 	
-	public SpriteLayout Duplicate() {
+	public SpriteLayout duplicate() {
 		SpriteLayout ret = new SpriteLayout(sprites.length);
 		
 		for(int i=0; i<sprites.length; ++i) {

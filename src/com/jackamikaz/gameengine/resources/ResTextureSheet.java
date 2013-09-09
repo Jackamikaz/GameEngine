@@ -7,8 +7,8 @@ import com.jackamikaz.gameengine.Engine;
 public class ResTextureSheet extends Resource {
 
 	@Override
-	public void Load() {
-		Texture tex = Engine.ResourceManager().GetTexture(files[0]);
+	public void load() {
+		Texture tex = Engine.resourceManager().getTexture(files[0]);
 		
 		int w = Integer.parseInt(files[1]);
 		int h = Integer.parseInt(files[2]);
@@ -27,11 +27,11 @@ public class ResTextureSheet extends Resource {
 	}
 
 	@Override
-	protected void UnLoadImpl() {
+	protected void unLoadImpl() {
 	}
 
 	@Override
-	public String GetResName() {
+	public String getResName() {
 		return "TextureSheet";
 	}
 

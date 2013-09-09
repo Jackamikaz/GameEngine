@@ -10,18 +10,18 @@ public class ResSpriteLayout extends Resource {
 	}*/
 
 	@Override
-	public void Load() {
+	public void load() {
 		SpriteLayout layout = new SpriteLayout(Gdx.files.internal(files[0]));
 		
 		resObj = layout;
 	}
 
 	@Override
-	protected void UnLoadImpl() {
+	protected void unLoadImpl() {
 	}
 
 	@Override
-	public String GetResName() {
+	public String getResName() {
 		return "SpriteLayout";
 	}
 

@@ -10,7 +10,7 @@ public class ResShader extends Resource {
 	}*/
 
 	@Override
-	public void Load() {
+	public void load() {
 		ShaderProgram shader = new ShaderProgram(
 				Gdx.files.internal(files[0]),
 				Gdx.files.internal(files[1]));
@@ -22,12 +22,12 @@ public class ResShader extends Resource {
 	}
 
 	@Override
-	public void UnLoadImpl() {
+	public void unLoadImpl() {
 		((ShaderProgram)resObj).dispose();
 	}
 
 	@Override
-	public String GetResName() {
+	public String getResName() {
 		return "Shader";
 	}
 

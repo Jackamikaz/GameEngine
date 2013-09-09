@@ -72,15 +72,15 @@ public class SpriteLayoutEditor implements DisplayedEntity, InputEntity, Action 
 			resname = spr.resname;
 		}
 		
-		public void SetResource(String name) {
+		public void setResource(String name) {
 			resname = name;
 			needResCheck = true;
 		}
 		
-		public void CheckResource() {
+		public void checkResource() {
 			if (needResCheck && currentSprite != null) {
 				needResCheck = false;
-				Texture tex = Engine.ResourceManager().GetTexture(resname);
+				Texture tex = Engine.resourceManager().getTexture(resname);
 				if (tex != null) {
 					float x = getX();
 					float y = getY();
@@ -100,12 +100,12 @@ public class SpriteLayoutEditor implements DisplayedEntity, InputEntity, Action 
 		
 		@Override
 		public void draw(SpriteBatch batch) {
-			CheckResource();
+			checkResource();
 			super.draw(batch);
 		}
 		
 		public void draw(SpriteBatch batch, float alphaModulation) {
-			CheckResource();
+			checkResource();
 			super.draw(batch, alphaModulation);
 		}
 	}
@@ -150,16 +150,16 @@ public class SpriteLayoutEditor implements DisplayedEntity, InputEntity, Action 
 	private InputWatcher iptOrigin;
 	private float rotOnClic;
 	
-	public void ActivateOnKey(int key) {
+	public void activateOnKey(int key) {
 		KeyWatcher kw = new KeyWatcher(key);
 		
-		Engine.InputMaster().Add(kw);
-		Engine.UpdateMaster().Add(new ActionOnCondition(this, new InputCondition(kw)));
+		Engine.inputMaster().add(kw);
+		Engine.updateMaster().add(new ActionOnCondition(this, new InputCondition(kw)));
 	}
 	
 	@Override
-	public void DoAction() {
-		Start();
+	public void doAction() {
+		start();
 	}
 	
 	public SpriteLayoutEditor() {
@@ -192,7 +192,7 @@ public class SpriteLayoutEditor implements DisplayedEntity, InputEntity, Action 
 		remove = new JButton("remove");
 		
 		name = new JTextField();
-		resource = new JComboBox(Engine.ResourceManager().ExtractResourceNameOfType(ResTexture.class));
+		resource = new JComboBox(Engine.resourceManager().extractResourceNameOfType(ResTexture.class));
 		
 		posx = new NumericTextField(4);
 		posy = new NumericTextField(4);
@@ -226,7 +226,7 @@ public class SpriteLayoutEditor implements DisplayedEntity, InputEntity, Action 
 			public void actionPerformed(ActionEvent action) {
 				if (!isRefreshing && currentSprite != null) {
 					String resname = (String)resource.getSelectedItem();
-					currentSprite.SetResource(resname);
+					currentSprite.setResource(resname);
 				}
 			}
 		});
@@ -289,7 +289,7 @@ public class SpriteLayoutEditor implements DisplayedEntity, InputEntity, Action 
 			@Override
 			public void actionPerformed(ActionEvent action) {
 				if (currentSprite != null)
-					currentSprite.setRotation(Angle(rotation.getValue()));
+					currentSprite.setRotation(angle(rotation.getValue()));
 			}
 		});
 		
@@ -300,7 +300,7 @@ public class SpriteLayoutEditor implements DisplayedEntity, InputEntity, Action 
 					currentSprite = new SpriteExt(currentSprite);
 					sprites.add(currentSprite);
 					currentSprite.setPosition(0.0f, 0.0f);
-					UpdateFields();
+					updateFields();
 				}
 			}
 		});
@@ -314,7 +314,7 @@ public class SpriteLayoutEditor implements DisplayedEntity, InputEntity, Action 
 					if (idx >= sprites.size())
 						idx = 0;
 					currentSprite = sprites.get(idx);
-					UpdateFields();
+					updateFields();
 				}
 			}
 		});
@@ -327,7 +327,7 @@ public class SpriteLayoutEditor implements DisplayedEntity, InputEntity, Action 
 					if (idx >= sprites.size())
 						idx = 0;
 					currentSprite = sprites.get(idx);
-					UpdateFields();
+					updateFields();
 				}
 			}
 		});
@@ -340,7 +340,7 @@ public class SpriteLayoutEditor implements DisplayedEntity, InputEntity, Action 
 					if (idx < 0)
 						idx = sprites.size() - 1;
 					currentSprite = sprites.get(idx);
-					UpdateFields();
+					updateFields();
 				}
 			}
 		});
@@ -394,7 +394,7 @@ public class SpriteLayoutEditor implements DisplayedEntity, InputEntity, Action 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
-				String check = CheckSaveValidity();
+				String check = checkSaveValidity();
 				if (check == null) {
 					// save popup
 					int returnVal = fc.showSaveDialog(frame);
@@ -402,7 +402,7 @@ public class SpriteLayoutEditor implements DisplayedEntity, InputEntity, Action 
 					if (returnVal == JFileChooser.APPROVE_OPTION) {
 						File f = fc.getSelectedFile();
 						if (f != null)
-							Save(f);
+							save(f);
 					}
 				}
 				else {
@@ -427,7 +427,7 @@ public class SpriteLayoutEditor implements DisplayedEntity, InputEntity, Action 
 					if (returnVal == JFileChooser.APPROVE_OPTION) {
 						File f = fc.getSelectedFile();
 						if (f != null)
-							Load(Gdx.files.absolute(f.getAbsolutePath()));
+							load(Gdx.files.absolute(f.getAbsolutePath()));
 					}
 				}
 			}
@@ -438,7 +438,7 @@ public class SpriteLayoutEditor implements DisplayedEntity, InputEntity, Action 
 		
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e){ 
-		    	Engine.PopAll();
+		    	Engine.popAll();
 		    	frame.setVisible(false);
 		    }
 		});
@@ -448,11 +448,11 @@ public class SpriteLayoutEditor implements DisplayedEntity, InputEntity, Action 
 		else
 			renderer = new ImmediateModeRenderer10();
 		
-		UpdateFields();
+		updateFields();
 	}
 	
 	
-	private void UpdateFields() {
+	private void updateFields() {
 		isRefreshing = true;
 		if (currentSprite != null) {
 			
@@ -492,34 +492,34 @@ public class SpriteLayoutEditor implements DisplayedEntity, InputEntity, Action 
 		isRefreshing = false;
 	}
 	
-	public void Start() {
+	public void start() {
 		if (!frame.isVisible()) {
 			frame.setVisible(true);
 			
-			Engine.PushAll();
-			Engine.DisplayMaster().Add(this);
-			Engine.InputMaster().Add(this);
+			Engine.pushAll();
+			Engine.displayMaster().add(this);
+			Engine.inputMaster().add(this);
 		}
 	}
 
 	@Override
-	public void Display(float gdt, float glerp) {
+	public void display(float gdt, float glerp) {
 		Gdx.gl.glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
-		camera.setToOrtho(false, DisplayMaster.Width(), DisplayMaster.Height());
+		camera.setToOrtho(false, DisplayMaster.width(), DisplayMaster.height());
 		camera.position.x = camPos.x;
 		camera.position.y = camPos.y;
 		camera.zoom = camZoom;
 		camera.update();
 		
-		DisplayMaster.Batch().setProjectionMatrix(camera.projection);
-		DisplayMaster.Batch().setTransformMatrix(camera.view);
+		DisplayMaster.batch().setProjectionMatrix(camera.projection);
+		DisplayMaster.batch().setTransformMatrix(camera.view);
 		
 		for(SpriteExt spr : sprites) {
-			spr.CheckResource();
+			spr.checkResource();
 			if (spr.getTexture() != null)
-				spr.draw(DisplayMaster.Batch());
+				spr.draw(DisplayMaster.batch());
 		}
 		
 		if (currentSprite != null) {
@@ -550,11 +550,11 @@ public class SpriteLayoutEditor implements DisplayedEntity, InputEntity, Action 
 	}
 
 	@Override
-	public int GetDisplayRank() {
+	public int getDisplayRank() {
 		return 0;
 	}
 	
-	static final private float Angle(float val) {
+	static final private float angle(float val) {
 		val = val % 360.0f;
 		if (val < 0.0f)
 			return val + 360.0f;
@@ -563,15 +563,15 @@ public class SpriteLayoutEditor implements DisplayedEntity, InputEntity, Action 
 	}
 	
 	@Override
-	public void NewInput(Input input) {
+	public void newInput(Input input) {
 		
-		iptSelect.NewInput(input);
-		iptTurn.NewInput(input);
-		iptOrigin.NewInput(input);
+		iptSelect.newInput(input);
+		iptTurn.newInput(input);
+		iptOrigin.newInput(input);
 		
 		Vector2 clicPos = new Vector2(
-				-DisplayMaster.Width()/2  + input.getX(),
-				DisplayMaster.Height()/2 - input.getY());
+				-DisplayMaster.width()/2  + input.getX(),
+				DisplayMaster.height()/2 - input.getY());
 		clicPos.add(camPos);
 		
 		if (iptSelect.wasPressed()) {
@@ -586,7 +586,7 @@ public class SpriteLayoutEditor implements DisplayedEntity, InputEntity, Action 
 					currentSprite = spr;
 				}
 			}
-			UpdateFields();
+			updateFields();
 		}
 		else if (iptTurn.isPressed()
 				&& input.isKeyPressed(Keys.CONTROL_LEFT)) {
@@ -606,8 +606,8 @@ public class SpriteLayoutEditor implements DisplayedEntity, InputEntity, Action 
 					currentSprite.getY()+currentSprite.getOriginY());
 			Tmp.vec2.a.sub(clicPos);
 			float rot = Tmp.vec2.a.angle();
-			currentSprite.setRotation(Angle(rot-rotOnClic));
-			UpdateFields();
+			currentSprite.setRotation(angle(rot-rotOnClic));
+			updateFields();
 		}
 		else if (iptOrigin.wasPressed()) {
 			float cr = MathUtils.cosDeg(currentSprite.getRotation());
@@ -623,16 +623,16 @@ public class SpriteLayoutEditor implements DisplayedEntity, InputEntity, Action 
 			currentSprite.translate(
 					clicPos.x - (currentSprite.getX() + currentSprite.getOriginX()),
 					clicPos.y - (currentSprite.getY() + currentSprite.getOriginY()));
-			UpdateFields();
+			updateFields();
 		}
 		
 		if (iptSelect.isPressed() && currentSprite != null) {
 			currentSprite.translate(input.getDeltaX(), -input.getDeltaY());
-			UpdateFields();
+			updateFields();
 		}
 	}
 	
-	private String CheckSaveValidity() {
+	private String checkSaveValidity() {
 		
 		// Names must not contain spaces or tabs, and not be emtpy
 		Pattern pattern = Pattern.compile("\\s");
@@ -656,7 +656,7 @@ public class SpriteLayoutEditor implements DisplayedEntity, InputEntity, Action 
 		return null;
 	}
 	
-	private void Save(File file) {
+	private void save(File file) {
 		
 		try {
 			FileWriter fw = new FileWriter(file);
@@ -676,7 +676,7 @@ public class SpriteLayoutEditor implements DisplayedEntity, InputEntity, Action 
 		}
 	}
 	
-	private void Load(FileHandle file) {
+	private void load(FileHandle file) {
 		
 		sprites.clear();
 		currentSprite = null;
@@ -698,7 +698,7 @@ public class SpriteLayoutEditor implements DisplayedEntity, InputEntity, Action 
 				
 				SpriteExt spr = new SpriteExt();
 				spr.name = tokens[0];
-				spr.SetResource(tokens[1]);
+				spr.setResource(tokens[1]);
 				spr.setPosition(Float.parseFloat(tokens[2]), Float.parseFloat(tokens[3]));
 				if (tokens.length >= 6)
 					spr.setScale(Float.parseFloat(tokens[4]), Float.parseFloat(tokens[5]));
@@ -720,6 +720,6 @@ public class SpriteLayoutEditor implements DisplayedEntity, InputEntity, Action 
 		if (!sprites.isEmpty())
 			currentSprite = sprites.getFirst();
 		
-		UpdateFields();
+		updateFields();
 	}
 }
